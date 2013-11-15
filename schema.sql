@@ -2,6 +2,7 @@ drop table if exists users;
 create table users (
     id integer primary key autoincrement,
     name text not null,
+    date text not null,
     registration_id text not null,
     public_key BLOB not null
 );
