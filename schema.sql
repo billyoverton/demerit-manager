@@ -4,7 +4,7 @@ create table users (
     name text not null,
     date text not null,
     registration_id text not null,
-    public_key BLOB not null
+    public_key text not null
 );
 
 drop table if exists decrees;
@@ -19,7 +19,7 @@ drop table if exists decree_signatures;
 create table decree_signatures (
     signer integer not null,
     decree integer not null,
-    signature blob not null
+    signature text not null
 );
 
 drop table if exists demerits;
@@ -28,7 +28,7 @@ create table demerits (
     receiver integer not null,
     reason text not null,
     date text not null,
-    issuer_signature blob not null,
-    receiver_signature blob
+    issuer_signature text not null,
+    receiver_signature text
 );
 
