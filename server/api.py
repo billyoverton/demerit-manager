@@ -1,3 +1,4 @@
+from Crypto.PublicKey import RSA
 from flask import g, request, abort
 import datetime
 
@@ -19,12 +20,18 @@ def add_user():
         abort(400)
     if 'registration_id' not in data:
         abort(400)
+    
+    # Try and verify the key
+    try:
+        key = RSA.importKey(data['key'])
+    except ValueError:
+        abort(400)
 
     join_date = datetime.datetime.now()
 
     insert_sql = "insert into users values (NULL,?,?,?,?)"
 
-    cur = g.db.execute(insert_sql,[data['name'],join_date,data['registration_id'],data['key']])
+    cur = g.db.execute(insert_sql,[data['name'],join_date,data['registration_id'],str(key.exportKey())])
     g.db.commit()
 
     return {'id':cur.lastrowid}
